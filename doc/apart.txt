@@ -1,0 +1,51 @@
+*apart.txt*         Simple auto paren/quote plugin for Vim with Lispy features.
+
+
+                         Apart.vim Manual — Alex Vear~
+
+
+Welcome to the Apart user manual.                 *apart*  *apart.vim*  *vim-apart*
+
+    1. Introduction ............................... |apart-intro|
+    2. Usage ...................................... |apart-usage|
+    3. Change log ................................. |apart-changelog|
+    4. Legal ...................................... |apart-legal|
+
+==============================================================================
+ 1. INTRODUCTION                                                  *apart-intro*
+
+Apart is a simple auto-bracket/quote plugin for Vim.  It is designed to work
+for all file types, but offers additional functionality for S-expression
+based languages.
+
+Note: Apart requires Vim 8.2+ with |vim9script|.
+
+WARNING: Apart is still a work-in-progress.
+
+==============================================================================
+ 2. USAGE                                                         *apart-usage*
+
+WARNING: Work-in-progress.
+
+==============================================================================
+ 3. CHANGE LOG                                                *apart-changelog*
+
+v0.1 [Unreleased]~
+
+  * Initial release.
+
+==============================================================================
+ 4. LEGAL                                                         *apart-legal*
+
+*No Rights Reserved*
+
+All source code, documentation and associated files packaged with apart.vim
+are dedicated to the public domain.  A full copy of the CC0 (Creative Commons
+Zero 1.0 Universal) public domain dedication should have been provided with
+this extension in the `COPYING` file.
+
+The author is not aware of any patent claims which may affect the use,
+modification or distribution of this software.
+
+------------------------------------------------------------------------------
+vim:et:ts=2:sts=2:sw=2:tw=78:ft=help:norl:
