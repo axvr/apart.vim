@@ -7,20 +7,18 @@
 
 vim9script
 
-# TODO: decide how to organise this project.
-#   - basic pair functionality for non-lisps and full functionality for lisps.
 # TODO: config options to choose what should be enabled.
-#   - how to set default pairs and options.
-# TODO: expand/shrink region selection.  (basic and lisp-version?)
+#   - how to set default pairs and options?
+# TODO: expand/shrink region selection?  (basic and lisp-version?)
 
 # TODO: option to autoindent on close pair. - Lisp-only?
 # TODO: if close is on next line, move it up (<C-o>J<C-o>dt .. close). - Lisp-only
-# TODO: add some paredit/vim-sexp features.  Will be slowly added over time.
-# TODO: compare current behaviour against Emacs' electric-pairs and ParEdit.
-# TODO: paredit won't let you backspace over end delimiters.
-# TODO: map <DEL> key?
+# TODO: force paren balancing?
+
+# TODO: ( ) [ ] [[ ]] [] [( ]) ... mappings.
 
 const apart_escape_char = '\'
+const apart_auto_escape = 0
 
 const apart_pairs = {
             \   '(': ')',
@@ -86,7 +84,7 @@ def BackspaceQuote(delim: string): string
 
     # Backspace escaped quote.
     if prevprevchar ==# escchar
-        if Conf('apart_auto_escape', 1) && delim ==# '"'
+        if Conf('apart_auto_escape', apart_auto_escape) && delim ==# '"'
             return "\<BS>\<BS>"
         else
             return "\<BS>"
@@ -157,7 +155,7 @@ export def apart#quote(char: string): string
         return jump
     endif
 
-    if Conf('apart_auto_escape', 1)
+    if Conf('apart_auto_escape', apart_auto_escape)
         if prevchar !=# char
             const cur = getcurpos()
             # If in a string, escape new double quote characters.
