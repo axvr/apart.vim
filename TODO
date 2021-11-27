@@ -1,2 +1,18 @@
+- Better configuration mechanism.
+  - Auto-set `apart_cr` (+ better name)
+
+- ( ) [ ] [[ ]] [] [( ]) ... mappings.
+
+- If close is on next line, move it up (<C-o>J<C-o>dt .. close). - Lisp-only
+  - Else, jump to close.  (+ config option for this.)
+
 - Docs
-- GIFs for README
+  - GIFs for README
+
+- Option to autoindent on close pair. - Lisp-only?
+
+- Expand/shrink region selection?
+  - Expand with: + or u
+  - Shrink with: - or d
+
+- Force paren balancing?

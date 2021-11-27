@@ -7,16 +7,6 @@
 
 vim9script
 
-# TODO: config options to choose what should be enabled.
-#   - how to set default pairs and options?
-# TODO: expand/shrink region selection?  (basic and lisp-version?)
-
-# TODO: option to autoindent on close pair. - Lisp-only?
-# TODO: if close is on next line, move it up (<C-o>J<C-o>dt .. close). - Lisp-only
-# TODO: force paren balancing?
-
-# TODO: ( ) [ ] [[ ]] [] [( ]) ... mappings.
-
 const apart_escape_char = '\'
 const apart_auto_escape = 0
 
