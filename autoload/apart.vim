@@ -24,17 +24,10 @@ const apart_pairs = {
             \   '(': ')',
             \   '[': ']',
             \   '{': '}',
-            \   '"': '"'
+            \   '"': '"',
+            \   "'": "'",
+            \   '`': '`'
             \ }
-
-# const apart_pairs = {
-#             \   '(': ')',
-#             \   '[': ']',
-#             \   '{': '}',
-#             \   '"': '"',
-#             \   "'": "'",
-#             \   '`': '`'
-#             \ }
 
 def Conf(name: string, default: any): any
     return get(b:, name, get(g:, name, default))
