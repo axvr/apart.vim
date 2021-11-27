@@ -165,6 +165,17 @@ export def apart#quote(char: string): string
                 \ : char .. char .. "\<C-G>U\<Left>"
 enddef
 
+export def apart#cr(): string
+    const nextchar = GetChar(1)
+    const prevchar = GetChar(-1)
+
+    if (prevchar ==# '{' && nextchar ==# '}') || (prevchar ==# '[' && nextchar ==# ']')
+        return "\<C-G>U\<CR>\<C-o>O"
+    else
+        return "\<CR>"
+    endif
+enddef
+
 export def apart#init(): void
     if !get(b:, 'apart_initialised', 0)
         b:apart_initialised = 1
@@ -183,5 +194,9 @@ export def apart#init(): void
         endfor
 
         inoremap <expr> <buffer> <silent> <BS> apart#backspace()
+
+        if Conf('apart_cr', 0)
+            inoremap <expr> <buffer> <silent> <CR> apart#cr()
+        endif
     endif
 enddef
