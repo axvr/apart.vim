@@ -31,5 +31,5 @@ augroup END
 
 augroup apart
     autocmd!
-    autocmd BufRead,BufNewFile * :call apart#init()
+    autocmd BufEnter * :call apart#init()
 augroup END

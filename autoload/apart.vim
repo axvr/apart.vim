@@ -15,8 +15,7 @@ const apart_pairs = {
             \   '[': ']',
             \   '{': '}',
             \   '"': '"',
-            \   "'": "'",
-            \   '`': '`'
+            \   "'": "'"
             \ }
 
 def Conf(name: string, default: any): any
