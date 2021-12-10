@@ -115,7 +115,7 @@ export def apart#close(close: string): string
 enddef
 
 export def apart#open(open: string, close: string): string
-    return GetChar(-1) ==# apart_escape_char || GetChar(1) =~# '\m[^\s\.)}\]]'
+    return GetChar(-1) ==# apart_escape_char || GetChar(1) =~# '\m[^ \t\.)}\]]'
                 \ ? open
                 \ : open .. close .. "\<C-G>U\<Left>"
 enddef
