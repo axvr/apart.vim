@@ -7,19 +7,17 @@
 
 vim9script
 
-const apart_escape_char = '\'
-const apart_auto_escape = 0
-
-const apart_pairs = {
-            \   '(': ')',
-            \   '[': ']',
-            \   '{': '}',
-            \   '"': '"',
-            \   "'": "'"
+const apart_config = {
+            \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
+            \   'cr_split': { '[': ']', '{': '}' },
+            \   'auto_escape': 0,
+            \   'escape_char': '\'
             \ }
 
 def Conf(name: string, default: any): any
-    return get(b:, name, get(g:, name, default))
+    const user_config = get(b:, 'apart_config', get(g:, 'apart_config', {}))
+    const merged_config = extendnew(apart_config, user_config)
+    return get(merged_config, name, default)
 enddef
 
 if exists('*synstack')
@@ -60,13 +58,13 @@ def GetChar(rel_idx: number): string
 enddef
 
 def BackspaceQuote(delim: string): string
-    const pairs = Conf('apart_pairs', apart_pairs)
+    const pairs = Conf('pairs', {})
     const prevprevchar = GetChar(-2)
-    const escchar = Conf('apart_escape_char', apart_escape_char)
+    const escchar = Conf('escape_char', 0)
 
     # Backspace escaped quote.
     if prevprevchar ==# escchar
-        if Conf('apart_auto_escape', apart_auto_escape) && delim ==# '"'
+        if Conf('auto_escape', 0) && delim ==# '"'
             return "\<BS>\<BS>"
         else
             return "\<BS>"
@@ -85,14 +83,12 @@ def BackspaceQuote(delim: string): string
 enddef
 
 def BackspacePair(open: string, close: string): string
-    return GetChar(1) ==# close
-                \ ? "\<C-G>U\<BS>\<DEL>"
-                \ : "\<BS>"
+    return GetChar(1) ==# close ? "\<C-G>U\<BS>\<DEL>" : "\<BS>"
 enddef
 
 export def apart#backspace(): string
     const prevchar = GetChar(-1)
-    const pairs = Conf('apart_pairs', apart_pairs)
+    const pairs = Conf('pairs', {})
 
     if has_key(pairs, prevchar)
         const open = prevchar
@@ -109,21 +105,40 @@ export def apart#backspace(): string
 enddef
 
 export def apart#close(close: string): string
-    return GetChar(1) ==# close
-                \ ? "\<C-G>U\<Right>"
-                \ : close
+    const pairs = Conf('pairs', {})
+
+    # If close was removed from apart_config, return early.
+    if index(values(pairs), char) == -1
+        return char
+    endif
+
+    return GetChar(1) ==# close ? "\<C-G>U\<Right>" : close
 enddef
 
 export def apart#open(open: string, close: string): string
-    return GetChar(-1) ==# apart_escape_char || GetChar(1) =~# '\m[^ \t\.)}\]]'
+    const pairs = Conf('pairs', {})
+
+    # If open was removed from apart_config, return early.
+    if !has_key(pairs, open)
+        return open
+    endif
+
+    return GetChar(-1) ==# Conf('escape_char', 0) || GetChar(1) =~# '\m[^ \t\.)}\]]'
                 \ ? open
                 \ : open .. close .. "\<C-G>U\<Left>"
 enddef
 
-# Escape character can be configured using "apart_escape_char".
-# Disable auto-escaped quote character insertion using "apart_auto_escape".
+# Escape character can be configured using "escape_char".
+# Disable auto-escaped quote character insertion using "auto_escape".
 export def apart#quote(char: string): string
-    const escchar = Conf('apart_escape_char', apart_escape_char)
+    const pairs = Conf('pairs', {})
+
+    # If char was removed from apart_config, return early.
+    if !has_key(pairs, char)
+        return char
+    endif
+
+    const escchar = Conf('escape_char', 0)
     const prevchar = GetChar(-1)
 
     # Return the actual value if escaped (preceded by the escape character).
@@ -137,7 +152,7 @@ export def apart#quote(char: string): string
         return jump
     endif
 
-    if Conf('apart_auto_escape', apart_auto_escape)
+    if Conf('auto_escape', 0)
         if prevchar !=# char
             const cur = getcurpos()
             # If in a string, escape new double quote characters.
@@ -154,38 +169,39 @@ export def apart#quote(char: string): string
                 \ : char .. char .. "\<C-G>U\<Left>"
 enddef
 
-export def apart#cr(): string
-    const nextchar = GetChar(1)
-    const prevchar = GetChar(-1)
+export def apart#cr_split(): string
+    for [open, close] in items(Conf('pairs', {}))
+        if GetChar(-1) ==# open && GetChar(1) ==# close
+            return "\<C-G>U\<CR>\<C-o>O"
+        endif
+    endfor
 
-    if (prevchar ==# '{' && nextchar ==# '}') || (prevchar ==# '[' && nextchar ==# ']')
-        return "\<C-G>U\<CR>\<C-o>O"
-    else
-        return "\<CR>"
-    endif
+    return "\<CR>"
 enddef
 
 export def apart#init(): void
-    if !get(b:, 'apart_initialised', 0)
-        b:apart_initialised = 1
-        lockvar b:apart_initialised
+    const pairs = Conf('pairs', {})
 
-        for [open, close] in items(Conf('apart_pairs', apart_pairs))
-            if open ==# close
-                exec 'inoremap <expr> <buffer> <silent> ' .. open .. ' apart#quote("'
-                            \ .. escape(open, '"') .. '")'
-            else
-                exec 'inoremap <expr> <buffer> <silent> ' .. open .. ' apart#open("'
-                            \ .. escape(open, '"') .. '", "' .. escape(close, '"') .. '")'
-                exec 'inoremap <expr> <buffer> <silent> ' .. close .. ' apart#close("'
-                            \ .. escape(close, '"') .. '")'
-            endif
-        endfor
-
-        inoremap <expr> <buffer> <silent> <BS> apart#backspace()
-
-        if Conf('apart_cr', 0)
-            inoremap <expr> <buffer> <silent> <CR> apart#cr()
+    for [open, close] in items(pairs)
+        if open ==# close
+            exec 'inoremap <expr> <buffer> <silent> '
+                        \ .. open .. ' apart#quote("'
+                        \ .. escape(open, '"') .. '")'
+        else
+            exec 'inoremap <expr> <buffer> <silent> '
+                        \ .. open .. ' apart#open("'
+                        \ .. escape(open, '"') .. '", "' .. escape(close, '"') .. '")'
+            exec 'inoremap <expr> <buffer> <silent> '
+                        \ .. close .. ' apart#close("'
+                        \ .. escape(close, '"') .. '")'
         endif
+    endfor
+
+    if !empty(pairs)
+        inoremap <expr> <buffer> <silent> <BS> apart#backspace()
+    endif
+
+    if !empty(Conf('cr_split', {}))
+        inoremap <expr> <buffer> <silent> <CR> apart#cr_split()
     endif
 enddef

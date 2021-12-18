@@ -7,25 +7,20 @@
 
 augroup apart_defaults
     autocmd!
-    autocmd FileType lisp,scheme,clojure let b:apart_pairs = {
-                \   '(': ')',
-                \   '[': ']',
-                \   '{': '}',
-                \   '"': '"'
+
+    autocmd FileType lisp,scheme,clojure let b:apart_config = {
+                \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
+                \   'cr_split': {}
                 \ }
-    autocmd FileType vim let b:apart_pairs = {
-                \   '(': ')',
-                \   '[': ']',
-                \   '{': '}',
-                \   "'": "'"
+
+    autocmd FileType vim let b:apart_config = {
+                \   'pairs': { '(': ')', '[': ']', '{': '}', "'": "'" },
+                \   'cr_split': {}
                 \ }
+
     autocmd FileType javascript,typescript let b:apart_pairs = {
-                \   '(': ')',
-                \   '[': ']',
-                \   '{': '}',
-                \   '"': '"',
-                \   "'": "'",
-                \   '`': '`'
+                \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'", '`': '`' },
+                \   'cr_split': { '[': ']', '{': '}' }
                 \ }
 augroup END
 
