@@ -1,4 +1,5 @@
-- ( ) [ ] [[ ]] [] [( ]) ... mappings.
+- ( ) [ ] [[ ]] [] [( ]) ... mappings for Lisp.
+  - Redefine 'sentence' and 'paragraph' text objects?
 
 - Remove auto-escape code?
 

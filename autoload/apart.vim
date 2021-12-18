@@ -109,8 +109,8 @@ export def apart#close(close: string): string
     const pairs = Conf('pairs', {})
 
     # If close was removed from apart_config, return early.
-    if index(values(pairs), char) == -1
-        return char
+    if index(values(pairs), close) == -1
+        return close
     endif
 
     return GetChar(1) ==# close ? "\<C-G>U\<Right>" : close
