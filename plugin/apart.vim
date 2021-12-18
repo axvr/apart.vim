@@ -8,7 +8,7 @@
 augroup apart_defaults
     autocmd!
 
-    autocmd FileType lisp,scheme,clojure let b:apart_config = {
+    autocmd FileType lisp,clojure,scheme,racket let b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
                 \   'cr_split': {},
                 \   'lisp_J': 1
@@ -19,7 +19,12 @@ augroup apart_defaults
                 \   'cr_split': {}
                 \ }
 
-    autocmd FileType javascript,typescript let b:apart_pairs = {
+    autocmd FileType python,cs let b:apart_config = {
+                \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'" },
+                \   'cr_split': { '[': ']', '{': '}' }
+                \ }
+
+    autocmd FileType javascript,typescript,json,perl,sh let b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'", '`': '`' },
                 \   'cr_split': { '[': ']', '{': '}' }
                 \ }
