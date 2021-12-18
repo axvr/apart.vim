@@ -61,10 +61,10 @@ enddef
 def BackspaceQuote(delim: string): string
     const pairs = Conf('pairs', {})
     const prevprevchar = GetChar(-2)
-    const escchar = Conf('escape_char', 0)
+    const escchar = Conf('escape_char', '')
 
     # Backspace escaped quote.
-    if prevprevchar ==# escchar
+    if !empty(escchar) && prevprevchar ==# escchar
         if Conf('auto_escape', 0) && delim ==# '"'
             return "\<BS>\<BS>"
         else
@@ -124,7 +124,8 @@ export def apart#open(open: string, close: string): string
         return open
     endif
 
-    return GetChar(-1) ==# Conf('escape_char', 0) || GetChar(1) =~# '\m[^ \t\.)}\]]'
+    const escchar = Conf('escape_char', '')
+    return empty(escchar) || GetChar(-1) ==# escchar || GetChar(1) =~# '\m[^ \t\.)}\]]'
                 \ ? open
                 \ : open .. close .. "\<C-G>U\<Left>"
 enddef
@@ -139,11 +140,11 @@ export def apart#quote(char: string): string
         return char
     endif
 
-    const escchar = Conf('escape_char', 0)
+    const escchar = Conf('escape_char', '')
     const prevchar = GetChar(-1)
 
     # Return the actual value if escaped (preceded by the escape character).
-    if prevchar ==# escchar
+    if empty(escchar) || prevchar ==# escchar
         return char
     endif
 
@@ -171,11 +172,12 @@ export def apart#quote(char: string): string
 enddef
 
 export def apart#cr_split(): string
-    for [open, close] in items(Conf('pairs', {}))
-        if GetChar(-1) ==# open && GetChar(1) ==# close
-            return "\<C-G>U\<CR>\<C-o>O"
-        endif
-    endfor
+    const pairs = Conf('cr_split', {})
+    const close = get(pairs, GetChar(-1), '')
+
+    if close !=# '' && close ==# GetChar(1)
+        return "\<C-G>U\<CR>\<C-o>O"
+    endif
 
     return "\<CR>"
 enddef
