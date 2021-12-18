@@ -2,8 +2,6 @@
 
 - Remove auto-escape code?
 
-- Add lispyj?
-
 - If close is on next line, move it up (<C-o>J<C-o>dt .. close). - Lisp-only
   - Else, jump to close.  (+ config option for this.)
 

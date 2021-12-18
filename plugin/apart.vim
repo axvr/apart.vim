@@ -10,7 +10,8 @@ augroup apart_defaults
 
     autocmd FileType lisp,scheme,clojure let b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
-                \   'cr_split': {}
+                \   'cr_split': {},
+                \   'lisp_J': 1
                 \ }
 
     autocmd FileType vim let b:apart_config = {

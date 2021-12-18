@@ -11,7 +11,8 @@ const apart_config = {
             \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
             \   'cr_split': { '[': ']', '{': '}' },
             \   'auto_escape': 0,
-            \   'escape_char': '\'
+            \   'escape_char': '\',
+            \   'lisp_J': 0
             \ }
 
 def Conf(name: string, default: any): any
@@ -203,5 +204,9 @@ export def apart#init(): void
 
     if !empty(Conf('cr_split', {}))
         inoremap <expr> <buffer> <silent> <CR> apart#cr_split()
+    endif
+
+    if Conf('lisp_J', 0)
+        nnoremap <silent> <buffer> J :<C-u>call apart#lisp_j#J(v:count1)<CR>
     endif
 enddef
