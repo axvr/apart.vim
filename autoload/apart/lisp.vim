@@ -1,13 +1,13 @@
 " ==================== APART.VIM ====================
 " Repository:   <https://github.com/axvr/apart.vim>
-" File:         autoload/apart/lisp_j.vim
+" File:         autoload/apart/lisp.vim
 " Author:       Alex Vear <alex@vear.uk>
 " Legal:        No rights reserved.  Public domain.
 " ===================================================
 
 " Smarter J mapping for Lisp dev: removes extra whitespace before closing
 " brackets.
-function! apart#lisp_j#J(count) abort
+function! apart#lisp#J(count) abort
     let c = a:count
     while c > 0
         normal! J

@@ -209,6 +209,6 @@ export def apart#init(): void
     endif
 
     if Conf('lisp_J', 0)
-        nnoremap <silent> <buffer> J :<C-u>call apart#lisp_j#J(v:count1)<CR>
+        nnoremap <silent> <buffer> J :<C-u>call apart#lisp#J(v:count1)<CR>
     endif
 enddef
