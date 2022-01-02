@@ -5,17 +5,19 @@
 " Legal:        No rights reserved.  Public domain.
 " ===================================================
 
-" Smarter J mapping for Lisp dev: removes extra whitespace before closing
-" brackets.
-function! apart#lisp#J(count) abort
-    let c = a:count
+vim9script
+
+# Smarter J mapping for Lisp dev: removes extra whitespace before closing
+# brackets.
+export def apart#lisp#J(count: number)
+    var c = count
     while c > 0
         normal! J
-        let nextchar  = getline('.')[getcursorcharpos()[2] - 1]
-        let nnextchar = getline('.')[getcursorcharpos()[2]]
+        const nextchar  = getline('.')[getcursorcharpos()[2] - 1]
+        const nnextchar = getline('.')[getcursorcharpos()[2]]
         if nextchar ==# ' ' && (nnextchar ==# ']' || nnextchar ==# '}')
             normal! x
         endif
-        let c -= 1
+        c -= 1
     endwhile
-endfunction
+enddef
