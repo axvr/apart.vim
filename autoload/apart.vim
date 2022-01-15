@@ -5,15 +5,16 @@
 " Legal:        No rights reserved.  Public domain.
 " ===================================================
 
-vim9script
+vim9script autoload
 
 const apart_config = {
-            \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
-            \   'cr_split': { '[': ']', '{': '}' },
-            \   'auto_escape': 0,
-            \   'escape_char': '\',
-            \   'lisp_J': 0
-            \ }
+      'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
+      'cr_split': { '[': ']', '{': '}' },
+      'auto_escape': 0,
+      'escape_char': '\',
+      'lisp_J': 0,
+      'lisp_object_motions': 0
+    }
 
 def Conf(name: string, default: any): any
     const user_config = get(b:, 'apart_config', get(g:, 'apart_config', {}))
@@ -87,7 +88,7 @@ def BackspacePair(open: string, close: string): string
     return GetChar(1) ==# close ? "\<C-G>U\<BS>\<DEL>" : "\<BS>"
 enddef
 
-export def apart#backspace(): string
+export def Backspace(): string
     const prevchar = GetChar(-1)
     const pairs = Conf('pairs', {})
 
@@ -105,7 +106,7 @@ export def apart#backspace(): string
     endif
 enddef
 
-export def apart#close(close: string): string
+export def Close(close: string): string
     const pairs = Conf('pairs', {})
 
     # If close was removed from apart_config, return early.
@@ -116,7 +117,7 @@ export def apart#close(close: string): string
     return GetChar(1) ==# close ? "\<C-G>U\<Right>" : close
 enddef
 
-export def apart#open(open: string, close: string): string
+export def Open(open: string, close: string): string
     const pairs = Conf('pairs', {})
 
     # If open was removed from apart_config, return early.
@@ -125,14 +126,15 @@ export def apart#open(open: string, close: string): string
     endif
 
     const escchar = Conf('escape_char', '')
-    return empty(escchar) || GetChar(-1) ==# escchar || GetChar(1) =~# '\m[^ \t\.)}\]]'
+    # TODO: add other symbols to this exclude list.
+    return empty(escchar) || GetChar(-1) ==# escchar || GetChar(1) =~# '\m[^ \t\.\$)}\]]'
                 \ ? open
                 \ : open .. close .. "\<C-G>U\<Left>"
 enddef
 
 # Escape character can be configured using "escape_char".
 # Disable auto-escaped quote character insertion using "auto_escape".
-export def apart#quote(char: string): string
+export def Quote(char: string): string
     const pairs = Conf('pairs', {})
 
     # If char was removed from apart_config, return early.
@@ -149,7 +151,7 @@ export def apart#quote(char: string): string
     endif
 
     # Test if can close.
-    const jump = apart#close(char)
+    const jump = Close(char)
     if jump !=# char
         return jump
     endif
@@ -171,7 +173,7 @@ export def apart#quote(char: string): string
                 \ : char .. char .. "\<C-G>U\<Left>"
 enddef
 
-export def apart#cr_split(): string
+export def CrSplit(): string
     const pairs = Conf('cr_split', {})
     const close = get(pairs, GetChar(-1), '')
 
@@ -182,30 +184,30 @@ export def apart#cr_split(): string
     return "\<CR>"
 enddef
 
-export def apart#init(): void
+export def Init()
     const pairs = Conf('pairs', {})
 
     for [open, close] in items(pairs)
         if open ==# close
             exec 'inoremap <expr> <buffer> <silent> '
-                        \ .. open .. ' apart#quote("'
+                        \ .. open .. ' apart#Quote("'
                         \ .. escape(open, '"') .. '")'
         else
             exec 'inoremap <expr> <buffer> <silent> '
-                        \ .. open .. ' apart#open("'
+                        \ .. open .. ' apart#Open("'
                         \ .. escape(open, '"') .. '", "' .. escape(close, '"') .. '")'
             exec 'inoremap <expr> <buffer> <silent> '
-                        \ .. close .. ' apart#close("'
+                        \ .. close .. ' apart#Close("'
                         \ .. escape(close, '"') .. '")'
         endif
     endfor
 
     if !empty(pairs)
-        inoremap <expr> <buffer> <silent> <BS> apart#backspace()
+        inoremap <expr> <buffer> <silent> <BS> apart#Backspace()
     endif
 
     if !empty(Conf('cr_split', {}))
-        inoremap <expr> <buffer> <silent> <CR> apart#cr_split()
+        inoremap <expr> <buffer> <silent> <CR> apart#CrSplit()
     endif
 
     if Conf('lisp_J', 0)

@@ -5,11 +5,11 @@
 " Legal:        No rights reserved.  Public domain.
 " ===================================================
 
-vim9script
+vim9script autoload
 
 # Smarter J mapping for Lisp dev: removes extra whitespace before closing
 # brackets.
-export def apart#lisp#J(count: number)
+export def J(count: number)
     var c = count
     while c > 0
         normal! J
