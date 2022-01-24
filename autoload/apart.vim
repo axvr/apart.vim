@@ -10,30 +10,24 @@ vim9script autoload
 const apart_config = {
       'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
       'cr_split': { '[': ']', '{': '}' },
-      'auto_escape': 0,
+      'string_auto_escape': 0,
       'escape_char': '\',
       'lisp_J': 0,
       'lisp_object_motions': 0
     }
 
-def Conf(name: string, default: any): any
+export def Conf(name: string, default: any): any
     const user_config = get(b:, 'apart_config', get(g:, 'apart_config', {}))
     const merged_config = extendnew(apart_config, user_config)
     return get(merged_config, name, default)
 enddef
 
-if exists('*synstack')
-    def SyntaxMatch(pat: string, line: number, col: number): bool
-        const stack = synstack(line, col)
-        # TODO: check entire stack?
-        return (synIDattr(get(stack, -1, -1), 'name') =~? pat)
-          \ || (synIDattr(get(stack, -2, -1), 'name') =~? pat)
-    enddef
-else
-    def SyntaxMatch(pat: string, line: number, col: number): bool
-        return synIDattr(synID(line, col, 0), 'name') =~? pat
-    enddef
-endif
+def SyntaxMatch(pat: string, line: number, col: number): bool
+    const stack = synstack(line, col)
+    # TODO: check entire stack?
+    return (synIDattr(get(stack, -1, -1), 'name') =~? pat)
+      \ || (synIDattr(get(stack, -2, -1), 'name') =~? pat)
+enddef
 
 # GetChar(0)  -> an empty string.
 # GetChar(1)  -> next character (the one under the cursor).
@@ -66,7 +60,7 @@ def BackspaceQuote(delim: string): string
 
     # Backspace escaped quote.
     if !empty(escchar) && prevprevchar ==# escchar
-        if Conf('auto_escape', 0) && delim ==# '"'
+        if Conf('string_auto_escape', 0) && delim ==# '"'
             return "\<BS>\<BS>"
         else
             return "\<BS>"
@@ -133,7 +127,7 @@ export def Open(open: string, close: string): string
 enddef
 
 # Escape character can be configured using "escape_char".
-# Disable auto-escaped quote character insertion using "auto_escape".
+# Disable auto-escaped quote character insertion using "string_auto_escape".
 export def Quote(char: string): string
     const pairs = Conf('pairs', {})
 
@@ -156,7 +150,7 @@ export def Quote(char: string): string
         return jump
     endif
 
-    if Conf('auto_escape', 0)
+    if Conf('string_auto_escape', 0)
         if prevchar !=# char
             const cur = getcurpos()
             # If in a string, escape new double quote characters.
@@ -210,7 +204,5 @@ export def Init()
         inoremap <expr> <buffer> <silent> <CR> apart#CrSplit()
     endif
 
-    if Conf('lisp_J', 0)
-        nnoremap <silent> <buffer> J :<C-u>call apart#lisp#J(v:count1)<CR>
-    endif
+    apart#lisp#Init()
 enddef

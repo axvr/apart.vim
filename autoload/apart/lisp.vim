@@ -21,3 +21,9 @@ export def J(count: number)
         c -= 1
     endwhile
 enddef
+
+export def Init()
+    if apart#Conf('lisp_J', 0)
+        nnoremap <silent> <buffer> J :<C-u>call apart#lisp#J(v:count1)<CR>
+    endif
+enddef

@@ -7,8 +7,6 @@
 
 vim9script
 
-# import autoload 'apart.vim'
-
 augroup apart_defaults
     autocmd!
 
