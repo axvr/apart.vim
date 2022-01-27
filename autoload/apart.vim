@@ -5,7 +5,7 @@
 " Legal:        No rights reserved.  Public domain.
 " ===================================================
 
-vim9script autoload
+vim9script
 
 const apart_config = {
       'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },

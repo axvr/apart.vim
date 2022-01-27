@@ -5,7 +5,7 @@
 " Legal:        No rights reserved.  Public domain.
 " ===================================================
 
-vim9script autoload
+vim9script
 
 # Smarter J mapping for Lisp dev: removes extra whitespace before closing
 # brackets.
