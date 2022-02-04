@@ -12,23 +12,22 @@ augroup apart_defaults
 
     autocmd FileType lisp,clojure,scheme,racket b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
-                \   'cr_split': {},
+                \   'return_split': {},
+                \   'space_split': {},
                 \   'lisp_J': 1
                 \ }
 
     autocmd FileType vim b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', "'": "'" },
-                \   'cr_split': {}
+                \   'return_split': {}
                 \ }
 
     autocmd FileType python,cs b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'" },
-                \   'cr_split': { '[': ']', '{': '}' }
                 \ }
 
     autocmd FileType javascript,typescript,json,perl,sh b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'", '`': '`' },
-                \   'cr_split': { '[': ']', '{': '}' }
                 \ }
 augroup END
 

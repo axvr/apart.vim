@@ -9,7 +9,8 @@ vim9script
 
 const apart_config = {
       'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
-      'cr_split': { '[': ']', '{': '}' },
+      'return_split': { '[': ']', '{': '}' },
+      'space_split': { '[': ']', '{': '}' },
       'string_auto_escape': 0,
       'escape_char': '\',
       'lisp_J': 0,
@@ -167,8 +168,8 @@ export def Quote(char: string): string
                 \ : char .. char .. "\<C-G>U\<Left>"
 enddef
 
-export def CrSplit(): string
-    const pairs = Conf('cr_split', {})
+export def ReturnSplit(): string
+    const pairs = Conf('return_split', {})
     const close = get(pairs, GetChar(-1), '')
 
     if close !=# '' && close ==# GetChar(1)
@@ -176,6 +177,17 @@ export def CrSplit(): string
     endif
 
     return "\<CR>"
+enddef
+
+export def SpaceSplit(): string
+    const pairs = Conf('space_split', {})
+    const close = get(pairs, GetChar(-1), '')
+
+    if close !=# '' && close ==# GetChar(1)
+        return "\<C-G>U\<Space>\<Space>\<Left>"
+    endif
+
+    return "\<Space>"
 enddef
 
 export def Init()
@@ -200,8 +212,12 @@ export def Init()
         inoremap <expr> <buffer> <silent> <BS> apart#Backspace()
     endif
 
-    if !empty(Conf('cr_split', {}))
-        inoremap <expr> <buffer> <silent> <CR> apart#CrSplit()
+    if !empty(Conf('return_split', {}))
+        inoremap <expr> <buffer> <silent> <CR> apart#ReturnSplit()
+    endif
+
+    if !empty(Conf('space_split', {}))
+        inoremap <expr> <buffer> <silent> <Space> apart#SpaceSplit()
     endif
 
     apart#lisp#Init()
