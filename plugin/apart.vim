@@ -10,23 +10,27 @@ vim9script
 augroup apart_defaults
     autocmd!
 
-    autocmd FileType lisp,clojure,scheme,racket b:apart_config = {
+    autocmd FileType lisp,clojure,edn,bb,scheme,chicken,guile,racket,elisp,hy,lfe,txr,tl,arc,bel,bass
+                \ b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
                 \   'return_split': {},
                 \   'space_split': {},
                 \   'lisp_J': 1
                 \ }
 
-    autocmd FileType vim b:apart_config = {
+    autocmd FileType vim
+                \ b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', "'": "'" },
                 \   'return_split': {}
                 \ }
 
-    autocmd FileType python,cs b:apart_config = {
+    autocmd FileType python,cs
+                \ b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'" },
                 \ }
 
-    autocmd FileType javascript,typescript,json,perl,sh b:apart_config = {
+    autocmd FileType javascript,typescript,json,perl,sh
+                \ b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'", '`': '`' },
                 \ }
 augroup END
