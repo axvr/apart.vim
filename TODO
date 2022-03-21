@@ -1,15 +1,14 @@
 - ( ) [ ] [[ ]] [] [( ]) ... mappings for Lisp.
   - Redefine 'sentence' and 'paragraph' text objects?
 
-- Remove auto-escape code?
-
 - If close is on next line, move it up (<C-o>J<C-o>dt .. close). - Lisp-only
   - Else, jump to close.  (+ config option for this.)
+- Option to autoindent on close pair. - Lisp-only?
+
+- Should Ctrl+) (and other closing pairs) always insert a ) without jumping?
 
 - Docs
   - GIFs for README
-
-- Option to autoindent on close pair. - Lisp-only?
 
 - Expand/shrink region selection?
   - Expand with: + or u

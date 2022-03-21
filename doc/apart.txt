@@ -7,9 +7,10 @@
 Welcome to the Apart user manual.                 *apart*  *apart.vim*  *vim-apart*
 
     1. Introduction ............................... |apart-intro|
-    2. Usage ...................................... |apart-usage|
-    3. Change log ................................. |apart-changelog|
-    4. Legal ...................................... |apart-legal|
+    2. Usage ...................................... |apart-installation|
+    3. Configuration .............................. |apart-configuration|
+    4. Change log ................................. |apart-changelog|
+    5. Legal ...................................... |apart-legal|
 
 ==============================================================================
  1. INTRODUCTION                                                  *apart-intro*
@@ -18,24 +19,145 @@ Apart is a simple auto-bracket/quote plugin for Vim.  It is designed to work
 for all file types, but offers additional functionality for S-expression
 based languages.
 
-Note: Apart requires Vim 8.2+ with |vim9script|.
+WARNING:
 
-WARNING: Apart is still a work-in-progress.
-
-==============================================================================
- 2. USAGE                                                         *apart-usage*
-
-WARNING: Work-in-progress.
+  * Apart requires Vim 8.2+ with |vim9script|.
+  * It is still a work-in-progress, so breaking changes are likely.
+  * It won't work properly if used alongside other auto-pair packages.
 
 ==============================================================================
- 3. CHANGE LOG                                                *apart-changelog*
+ 2. INSTALLATION                                           *apart-installation*
+
+To use Apart, just install it as you would any other |package| and it will start
+working immediately.
+
+Apart comes pre-configured for several languages (particularly Lisps), but you
+can configure it manually too (see: |apart-configuration|).
+
+==============================================================================
+ 3. CONFIGURATION                                         *apart-configuration*
+
+Apart is configured through |Dictionary|(s) in the *b:apart_config* and
+*g:apart_config* variables.  The buffer local (|b:|) config variable is merged
+onto the global config variable (|g:|).
+
+This section documents each key these dictionaries and what they do.
+
+------------------------------------------------------------------------------
+                                                                  *apart-pairs*
+Key:  pairs~
+Type: Dictionary of character to character~
+
+Use the 'pairs' option to set which pairs should auto-close (and which what
+matching character.)
+>
+    let b:apart_config = {
+        \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' }
+        \ }
+<
+------------------------------------------------------------------------------
+                                                           *apart-return_split*
+Key:  return_split~
+Type: Dictionary of character to character~
+
+Use 'return_split' to choose which pairs should separate further when you
+press the enter/return key (<CR>) inside them.
+
+Example:
+>
+    // Cursor is at |
+    function() {|}
+
+    // Pressed enter/return
+    function() {
+        |
+    }
+<
+To configure which pairs have this behaviour set them like so:
+>
+    let b:apart_config = {
+        \   'return_split': { '[': ']', '{': '}' }
+        \ }
+<
+------------------------------------------------------------------------------
+                                                            *apart-space_split*
+Key:  space_split~
+Type: Dictionary of character to character~
+
+Same as |apart-return_split| but on <Space> key rather than <CR> (enter/return).
+
+Example:
+>
+    // Cursor is at |
+    function() {|}
+
+    // Pressed space
+    function() { | }
+<
+Set which pairs have this behaviour like so:
+>
+    let b:apart_config = {
+        \   'space_split': { '[': ']', '{': '}' }
+        \ }
+<
+------------------------------------------------------------------------------
+                                                     *apart-string_auto_escape*
+Key:  string_auto_escape~
+Type: Boolean~
+
+When true (`1`) Apart will attempt to auto escape string delimiters if pressed
+when already inside a string.
+>
+    let b:apart_config = {
+        \   'string_auto_escape': 1
+        \ }
+<
+Note: set the escape character used with |apart-escape_char|.
+
+------------------------------------------------------------------------------
+                                                            *apart-escape_char*
+Key:  escape_char~
+Type: Character~
+
+Sets the escape character used by Apart.  Defaults to `\` (backslash).
+>
+    let b:apart_config = {
+        \   'escape_char': '\'
+        \ }
+<
+------------------------------------------------------------------------------
+                                                                 *apart-lisp_J*
+Key:  lisp_J~
+Type: Boolean~
+
+When true (`1`), Apart will remap |J| to a slightly alternate version which
+will remove spaces between closing brackets of any type (useful for Clojure).
+>
+    ;; Start (cursor is at |)
+    [1 2 3|
+     ]
+
+    ;; Pressed J with lisp_J off
+    [1 2 3| ]
+
+    ;; Pressed J with lisp_J on
+    [1 2 3|]
+<
+Configure like so:
+>
+    let b:apart_config = {
+        \   'lisp_J': 1
+        \ }
+<
+==============================================================================
+ 4. CHANGE LOG                                                *apart-changelog*
 
 v0.1 [Unreleased]~
 
   * Initial release.
 
 ==============================================================================
- 4. LEGAL                                                         *apart-legal*
+ 5. LEGAL                                                         *apart-legal*
 
 *No Rights Reserved*
 

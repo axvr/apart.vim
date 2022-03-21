@@ -6,7 +6,7 @@ This plugin is designed to work for all file types, but offers additional
 functionality for the [S-expression](https://en.wikipedia.org/wiki/S-expression)
 based languages.
 
-**Note**: this plugin is currently still a work-in-progress.
+**Note**: this plugin is still a work-in-progress.
 
 
 ## Installation
@@ -26,7 +26,14 @@ vim +'helptags ~/.vim/pack/plugins/start/apart/doc/' +q
 
 ## Usage
 
-**Work in progress!**
+After installation Apart.vim will instantly start working.  It comes with some
+decent defaults for many common languages.
+
+To learn about all the configuration options available run the following in Vim:
+
+```vim
+:help apart.txt
+```
 
 
 ## Legal
