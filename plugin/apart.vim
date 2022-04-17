@@ -33,6 +33,13 @@ augroup apart_defaults
                 \ b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'", '`': '`' },
                 \ }
+
+    autocmd FileType css
+                \ b:apart_config = {
+                \   'pairs': { '(': ')', '[': ']', '{': '}', "'": "'", '"': '"' },
+                \   'return_split': { '{': '}' },
+                \   'space_split': { '{': '}' }
+                \ }
 augroup END
 
 augroup apart
