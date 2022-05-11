@@ -6,6 +6,8 @@
 - Option to autoindent on close pair. - Lisp-only?
 
 - Should Ctrl+) (and other closing pairs) always insert a ) without jumping?
+  - Also Ctrl+( (and other opening pairs) should only insert that character.
+  - Maybe use Alt key?
 
 - Docs
   - GIFs for README
@@ -13,3 +15,9 @@
 - Expand/shrink region selection?
   - Expand with: + or u
   - Shrink with: - or d
+
+- References
+  - https://github.com/terryma/vim-expand-region
+  - https://github.com/guns/vim-sexp
+  - https://github.com/kovisoft/paredit/blob/master/doc/paredit.txt
+  - http://danmidwood.com/content/2014/11/21/animated-paredit.html

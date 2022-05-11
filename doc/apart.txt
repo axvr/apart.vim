@@ -152,7 +152,7 @@ Configure like so:
 ==============================================================================
  4. CHANGE LOG                                                *apart-changelog*
 
-v0.1 [Unreleased]~
+v0.1 [2022-05-11]~
 
   * Initial release.
 
