@@ -6,13 +6,14 @@ This plugin is designed to work for all file types, but offers additional
 functionality for the [S-expression](https://en.wikipedia.org/wiki/S-expression)
 based languages.
 
-**Note**: this plugin is still a work-in-progress.
-
 
 ## Installation
 
-**Note**: this plugin only works on Vim 8.2+ with Vim9script, so it **won't**
-work on Neovim.
+> **Note** Apart only works on Vim 8.2+ with Vim9script, so it **won't**
+> work on Neovim.
+
+> **Warning** This plugin is still a work-in-progress.  Until it reaches v1.0,
+> expect backwards incompatible changes.
 
 Installation of Apart can be performed by using your preferred plugin management
 solution.  If you don't have a Vim package manager I recommend using Vim
