@@ -68,7 +68,7 @@ def BackspaceQuote(delim: string): string
         endif
     endif
 
-    if GetChar(1) != pairs[delim]
+    if GetChar(1) != get(pairs, delim)
         return "\<BS>"
     endif
 
@@ -89,7 +89,7 @@ export def Backspace(): string
 
     if has_key(pairs, prevchar)
         const open = prevchar
-        const close = pairs[open]
+        const close = get(pairs, open)
 
         if open ==# close
             return BackspaceQuote(open)
