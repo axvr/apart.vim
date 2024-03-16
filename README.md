@@ -1,6 +1,6 @@
 # Apart.vim
 
-*A simple auto-bracket/quote plugin for Vim.*
+*A simple auto-bracket/quote plugin for Vim and Neovim.*
 
 This plugin is designed to work for all file types, but offers additional
 functionality for the [S-expression](https://en.wikipedia.org/wiki/S-expression)
@@ -8,9 +8,6 @@ based languages.
 
 
 ## Installation
-
-> [!NOTE]
-> Apart only works on Vim 8.2+ with Vim9script, so it **won't** work on Neovim.
 
 > [!WARNING]
 > This plugin is still a work-in-progress.  Until it reaches v1.0, expect
@@ -49,6 +46,5 @@ extension in the `COPYING` file.
 
 The author is not aware of any patent claims which may affect the use,
 modification or distribution of this software.
-
 
 [CC0]: https://creativecommons.org/publicdomain/zero/1.0/

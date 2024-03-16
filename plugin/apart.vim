@@ -5,13 +5,11 @@
 " Legal:        No rights reserved.  Public domain.
 " ===================================================
 
-vim9script
-
 augroup apart_defaults
     autocmd!
 
     autocmd FileType lisp,clojure,edn,bb,scheme,chicken,guile,racket,elisp,hy,lfe,txr,tl,arc,bel,bass
-                \ b:apart_config = {
+                \ let b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
                 \   'return_split': {},
                 \   'space_split': {},
@@ -19,23 +17,23 @@ augroup apart_defaults
                 \ }
 
     autocmd FileType vim
-                \ b:apart_config = {
+                \ let b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', "'": "'" },
                 \   'return_split': {}
                 \ }
 
     autocmd FileType python,cs
-                \ b:apart_config = {
+                \ let b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'" },
                 \ }
 
     autocmd FileType javascript,typescript,json,perl,sh
-                \ b:apart_config = {
+                \ let b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'", '`': '`' },
                 \ }
 
     autocmd FileType css
-                \ b:apart_config = {
+                \ let b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', "'": "'", '"': '"' },
                 \   'return_split': { '{': '}' },
                 \   'space_split': { '{': '}' }
