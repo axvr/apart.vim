@@ -9,11 +9,12 @@ based languages.
 
 ## Installation
 
-> **Note** Apart only works on Vim 8.2+ with Vim9script, so it **won't**
-> work on Neovim.
+> [!NOTE]
+> Apart only works on Vim 8.2+ with Vim9script, so it **won't** work on Neovim.
 
-> **Warning** This plugin is still a work-in-progress.  Until it reaches v1.0,
-> expect backwards incompatible changes.
+> [!WARNING]
+> This plugin is still a work-in-progress.  Until it reaches v1.0, expect
+> backwards incompatible changes.
 
 Installation of Apart can be performed by using your preferred plugin management
 solution.  If you don't have a Vim package manager I recommend using Vim
