@@ -144,7 +144,7 @@ function! apart#Quote(char)
     endif
 
     " Test if can close.
-    let jump = Close(a:char)
+    let jump = apart#Close(a:char)
     if jump !=# a:char
         return jump
     endif
