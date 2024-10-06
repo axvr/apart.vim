@@ -21,6 +21,14 @@ function! apart#Conf(name, default) abort
     return get(merged_config, a:name, a:default)
 endfunction
 
+function! apart#DoTimes(count, lambda) abort
+    let l:c = a:count
+    while l:c > 0
+        call a:lambda()
+        let l:c -= 1
+    endwhile
+endfunction
+
 function! s:SyntaxMatch(pat, line, col) abort
     let stack = synstack(a:line, a:col)
     " TODO: check entire stack?

@@ -7,36 +7,32 @@
 
 " Smarter J mapping for Lisp dev: removes extra whitespace before closing
 " brackets.
-function! apart#lisp#J(count) abort
-    let c = a:count
-    while c > 0
-        normal! J
-        let nextchar  = getline('.')[getcursorcharpos()[2] - 1]
-        let nnextchar = getline('.')[getcursorcharpos()[2]]
-        if nextchar ==# ' ' && (nnextchar ==# ']' || nnextchar ==# '}')
-            normal! x
-        endif
-        let c -= 1
-    endwhile
+function! apart#lisp#J() abort
+    normal! J
+    let nextchar  = getline('.')[getcursorcharpos()[2] - 1]
+    let nnextchar = getline('.')[getcursorcharpos()[2]]
+    if nextchar ==# ' ' && (nnextchar ==# ']' || nnextchar ==# '}')
+        normal! x
+    endif
 endfunction
 
-function! apart#lisp#NextForm(look_forward = 1) abort
-    call search('\m[([{]', 'W' . (a:look_forward ? 'z' : 'b'))
+function! apart#lisp#NextForm(look_backward = 0) abort
+    call search('\m[([{]', 'W' . (a:look_backward ? 'b' : 'z'))
 endfunction
 
-function! apart#lisp#NextTopForm(look_forward = 1) abort
-    call search('\m^[([{]', 'W' . (a:look_forward ? 'z' : 'b'))
+function! apart#lisp#NextTopForm(look_backward = 0) abort
+    call search('\m^[([{]', 'W' . (a:look_backward ? 'b' : 'z'))
 endfunction
 
 function! apart#lisp#Init() abort
     if apart#Conf('lisp_J', 0)
-        nnoremap <silent> <buffer> J :<C-u>call apart#lisp#J(v:count1)<CR>
+        nnoremap <silent> <buffer> J :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#J()})<CR>
     endif
 
     if apart#Conf('lisp_motions', 0)
-        nnoremap <silent> <buffer> ) :<C-u>call apart#lisp#NextForm()<CR>
-        nnoremap <silent> <buffer> ( :<C-u>call apart#lisp#NextForm(0)<CR>
-        nnoremap <silent> <buffer> } :<C-u>call apart#lisp#NextTopForm()<CR>
-        nnoremap <silent> <buffer> { :<C-u>call apart#lisp#NextTopForm(0)<CR>
+        nnoremap <silent> <buffer> ) :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextForm()})<CR>
+        nnoremap <silent> <buffer> ( :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextForm(1)})<CR>
+        nnoremap <silent> <buffer> } :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextTopForm()})<CR>
+        nnoremap <silent> <buffer> { :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextTopForm(1)})<CR>
     endif
 endfunction
