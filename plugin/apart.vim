@@ -8,7 +8,7 @@
 augroup apart_defaults
     autocmd!
 
-    autocmd FileType lisp,clojure,edn,bb,scheme,chicken,guile,racket,elisp,hy,lfe,txr,tl,arc,bel,bass
+    autocmd FileType lisp,clojure,edn,scheme,chicken,guile,racket,elisp,hy,lfe,txr,tl,arc,bel,bass
                 \ let b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
                 \   'return_split': {},
