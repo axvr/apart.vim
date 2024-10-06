@@ -39,6 +39,11 @@ augroup apart_defaults
                 \   'return_split': { '{': '}' },
                 \   'space_split': { '{': '}' }
                 \ }
+
+    autocmd FileType markdown
+                \ let b:apart_config = {
+                \   'space_split': {}
+                \ }
 augroup END
 
 augroup apart
