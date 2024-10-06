@@ -7,7 +7,7 @@
 
 " Smarter J mapping for Lisp dev: removes extra whitespace before closing
 " brackets.
-function! apart#lisp#J(count)
+function! apart#lisp#J(count) abort
     let c = a:count
     while c > 0
         normal! J
@@ -20,7 +20,7 @@ function! apart#lisp#J(count)
     endwhile
 endfunction
 
-function! apart#lisp#Init()
+function! apart#lisp#Init() abort
     if apart#Conf('lisp_J', 0)
         nnoremap <silent> <buffer> J :<C-u>call apart#lisp#J(v:count1)<CR>
     endif

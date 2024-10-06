@@ -15,13 +15,13 @@ let s:apart_config = {
     \   'lisp_object_motions': 0
     \ }
 
-function! apart#Conf(name, default)
+function! apart#Conf(name, default) abort
     let user_config = get(b:, 'apart_config', get(g:, 'apart_config', {}))
     let merged_config = extendnew(s:apart_config, user_config)
     return get(merged_config, a:name, a:default)
 endfunction
 
-function! s:SyntaxMatch(pat, line, col)
+function! s:SyntaxMatch(pat, line, col) abort
     let stack = synstack(a:line, a:col)
     " TODO: check entire stack?
     return (synIDattr(get(stack, -1, -1), 'name') =~? a:pat)
@@ -31,7 +31,7 @@ endfunction
 " s:GetChar(0)  -> an empty string.
 " s:GetChar(1)  -> next character (the one under the cursor).
 " s:GetChar(-1) -> character before the cursor.
-function! s:GetChar(rel_idx)
+function! s:GetChar(rel_idx) abort
     let line = getline('.')
     let cur = getcursorcharpos()
     let idx = cur[2] + a:rel_idx - 1
@@ -52,7 +52,7 @@ function! s:GetChar(rel_idx)
     endif
 endfunction
 
-function! s:BackspaceQuote(delim)
+function! s:BackspaceQuote(delim) abort
     let pairs = apart#Conf('pairs', {})
     let prevprevchar = s:GetChar(-2)
     let escchar = apart#Conf('escape_char', '')
@@ -77,11 +77,11 @@ function! s:BackspaceQuote(delim)
     return "\<BS>"
 endfunction
 
-function! s:BackspacePair(open, close)
+function! s:BackspacePair(open, close) abort
     return s:GetChar(1) ==# a:close ? "\<C-G>U\<BS>\<DEL>" : "\<BS>"
 endfunction
 
-function! apart#Backspace()
+function! apart#Backspace() abort
     let prevchar = s:GetChar(-1)
     let pairs = apart#Conf('pairs', {})
 
@@ -99,7 +99,7 @@ function! apart#Backspace()
     endif
 endfunction
 
-function! apart#Close(close)
+function! apart#Close(close) abort
     let pairs = apart#Conf('pairs', {})
 
     " If close was removed from apart_config, return early.
@@ -110,7 +110,7 @@ function! apart#Close(close)
     return s:GetChar(1) ==# a:close ? "\<C-G>U\<Right>" : a:close
 endfunction
 
-function! apart#Open(open, close)
+function! apart#Open(open, close) abort
     let pairs = apart#Conf('pairs', {})
 
     " If open was removed from apart_config, return early.
@@ -127,7 +127,7 @@ endfunction
 
 " Escape character can be configured using "escape_char".
 " Disable auto-escaped quote character insertion using "string_auto_escape".
-function! apart#Quote(char)
+function! apart#Quote(char) abort
     let pairs = apart#Conf('pairs', {})
 
     " If char was removed from apart_config, return early.
@@ -166,7 +166,7 @@ function! apart#Quote(char)
                 \ : a:char . a:char . "\<C-G>U\<Left>"
 endfunction
 
-function! apart#ReturnSplit()
+function! apart#ReturnSplit() abort
     let pairs = apart#Conf('return_split', {})
     let close = get(pairs, s:GetChar(-1), '')
 
@@ -177,7 +177,7 @@ function! apart#ReturnSplit()
     return "\<CR>"
 endfunction
 
-function! apart#SpaceSplit()
+function! apart#SpaceSplit() abort
     let pairs = apart#Conf('space_split', {})
     let close = get(pairs, s:GetChar(-1), '')
 
@@ -188,7 +188,7 @@ function! apart#SpaceSplit()
     return "\<Space>"
 endfunction
 
-function! apart#Init()
+function! apart#Init() abort
     let pairs = apart#Conf('pairs', {})
 
     for [open, close] in items(pairs)
