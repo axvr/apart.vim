@@ -5,10 +5,6 @@
   - Else, jump to close.  (+ config option for this.)
 - Option to autoindent on close pair. - Lisp-only?
 
-- Should Ctrl+) (and other closing pairs) always insert a ) without jumping?
-  - Also Ctrl+( (and other opening pairs) should only insert that character.
-  - Maybe use Alt key?
-
 - Docs
   - GIFs for README
 
