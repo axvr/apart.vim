@@ -13,7 +13,8 @@ augroup apart_defaults
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"' },
                 \   'return_split': {},
                 \   'space_split': {},
-                \   'lisp_J': 1
+                \   'lisp_J': 1,
+                \   'lisp_motions': 1
                 \ }
 
     autocmd FileType vim

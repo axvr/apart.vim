@@ -1,9 +1,9 @@
-- ( ) [ ] [[ ]] [] [( ]) ... mappings for Lisp.
-  - Redefine 'sentence' and 'paragraph' text objects?
+- Rebind some motions for better s-expr navigation.
+  - See `:help object-motions` and `:help various-motions`
 
 - Don't use space split in Markdown files.  (E.g. Markdown checkboxes)
 
-- If close is on next line, move it up (<C-o>J<C-o>dt .. close). - Lisp-only
+- If close is on next line, move it up (`<C-o>J<C-o>dt` .. close). - Lisp-only
   - Else, jump to close.  (+ config option for this.)
 - Option to autoindent on close pair. - Lisp-only?
 

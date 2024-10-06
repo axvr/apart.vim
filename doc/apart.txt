@@ -126,6 +126,20 @@ Sets the escape character used by Apart.  Defaults to `\` (backslash).
         \ }
 <
 ------------------------------------------------------------------------------
+                                                           *apart-lisp_motions*
+Key:  lisp_motions~
+Type: Boolean~
+
+When true (`1`), Apart will remap several normal mode motions to be better
+suited for Lisp/s-expression navigation.
+
+The following bindings are remapped: |(|, |)|, |{|, |}|.
+>
+    let b:apart_config = {
+        \   'lisp_motions': 1
+        \ }
+<
+------------------------------------------------------------------------------
                                                                  *apart-lisp_J*
 Key:  lisp_J~
 Type: Boolean~
