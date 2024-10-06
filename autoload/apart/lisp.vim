@@ -21,11 +21,11 @@ function! apart#lisp#J(count) abort
 endfunction
 
 function! apart#lisp#NextForm(look_forward = 1) abort
-    call search('\m[([{]', 'Wz' . (a:look_forward ? '' : 'b'))
+    call search('\m[([{]', 'W' . (a:look_forward ? 'z' : 'b'))
 endfunction
 
 function! apart#lisp#NextTopForm(look_forward = 1) abort
-    call search('\m^[([{]', 'Wz' . (a:look_forward ? '' : 'b'))
+    call search('\m^[([{]', 'W' . (a:look_forward ? 'z' : 'b'))
 endfunction
 
 function! apart#lisp#Init() abort
