@@ -23,7 +23,7 @@ augroup apart_defaults
                 \   'return_split': {}
                 \ }
 
-    autocmd FileType python,cs
+    autocmd FileType python,cs,toml
                 \ let b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'" },
                 \ }
