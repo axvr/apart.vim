@@ -16,12 +16,10 @@ function! apart#lisp#J() abort
     endif
 endfunction
 
-function! apart#lisp#NextForm(look_backward = 0) abort
-    call search('\m[([{]', 'W' . (a:look_backward ? 'b' : 'z'))
-endfunction
-
-function! apart#lisp#NextTopForm(look_backward = 0) abort
-    call search('\m^[([{]', 'W' . (a:look_backward ? 'b' : 'z'))
+function! apart#lisp#NextForm(top_level = 0, look_backward = 0) abort
+    let pattern = '\m' . (a:top_level ? '^' : '') . '[([{]'
+    let flags = 'W' . (a:look_backward ? 'b' : 'z')
+    call search(pattern, flags)
 endfunction
 
 function! apart#lisp#Init() abort
@@ -30,9 +28,9 @@ function! apart#lisp#Init() abort
     endif
 
     if apart#Conf('lisp_motions', 0)
-        nnoremap <silent> <buffer> ) :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextForm()})<CR>
-        nnoremap <silent> <buffer> ( :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextForm(1)})<CR>
-        nnoremap <silent> <buffer> } :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextTopForm()})<CR>
-        nnoremap <silent> <buffer> { :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextTopForm(1)})<CR>
+        nnoremap <silent> <buffer> ) :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextForm(0, 0)})<CR>
+        nnoremap <silent> <buffer> ( :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextForm(0, 1)})<CR>
+        nnoremap <silent> <buffer> } :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextForm(1, 0)})<CR>
+        nnoremap <silent> <buffer> { :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextForm(1, 1)})<CR>
     endif
 endfunction
