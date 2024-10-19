@@ -42,6 +42,7 @@ augroup apart_defaults
 
     autocmd FileType markdown
                 \ let b:apart_config = {
+                \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"', '_': '_' },
                 \   'space_split': {}
                 \ }
 augroup END
