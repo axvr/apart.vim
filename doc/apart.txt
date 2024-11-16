@@ -133,7 +133,7 @@ Type: Boolean~
 When true (`1`), Apart will remap several normal mode motions to be better
 suited for Lisp/s-expression navigation.
 
-The following bindings are remapped: |(|, |)|, |{|, |}|.
+The following bindings are remapped: |(|, |)|, |[[|, |]]|.
 >
     let b:apart_config = {
         \   'lisp_motions': 1

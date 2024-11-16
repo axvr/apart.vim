@@ -5,6 +5,8 @@
   - Else, jump to close.  (+ config option for this.)
 - Option to autoindent on close pair. - Lisp-only?
 
+- Document `<Plug>` mappings.
+
 - Docs
   - GIFs for README
 

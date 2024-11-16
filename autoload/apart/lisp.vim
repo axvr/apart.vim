@@ -24,10 +24,10 @@ function! apart#lisp#NextForm(top_level = 0, look_backward = 0) abort
     call search(pattern, flags)
 endfunction
 
-noremap <Plug>(apart/lisp_motions.form_next)     :<C-u>ApartCall apart#lisp#NextForm(0, 0)<CR>
-noremap <Plug>(apart/lisp_motions.form_prev)     :<C-u>ApartCall apart#lisp#NextForm(0, 1)<CR>
 noremap <Plug>(apart/lisp_motions.top_form_next) :<C-u>ApartCall apart#lisp#NextForm(1, 0)<CR>
 noremap <Plug>(apart/lisp_motions.top_form_prev) :<C-u>ApartCall apart#lisp#NextForm(1, 1)<CR>
+noremap <Plug>(apart/lisp_motions.form_next)     :<C-u>ApartCall apart#lisp#NextForm(0, 0)<CR>
+noremap <Plug>(apart/lisp_motions.form_prev)     :<C-u>ApartCall apart#lisp#NextForm(0, 1)<CR>
 
 function! apart#lisp#Init() abort
     if apart#Conf('lisp_J', 0)
@@ -35,10 +35,9 @@ function! apart#lisp#Init() abort
     endif
 
     if apart#Conf('lisp_motions', 0)
-        " TODO: maybe use ]] instead of }
+        map <silent> <buffer> ]] <Plug>(apart/lisp_motions.top_form_next)
+        map <silent> <buffer> [[ <Plug>(apart/lisp_motions.top_form_prev)
         map <silent> <buffer> ) <Plug>(apart/lisp_motions.form_next)
         map <silent> <buffer> ( <Plug>(apart/lisp_motions.form_prev)
-        map <silent> <buffer> } <Plug>(apart/lisp_motions.top_form_next)
-        map <silent> <buffer> { <Plug>(apart/lisp_motions.top_form_prev)
     endif
 endfunction
