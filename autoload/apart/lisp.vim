@@ -24,13 +24,13 @@ endfunction
 
 function! apart#lisp#Init() abort
     if apart#Conf('lisp_J', 0)
-        nnoremap <silent> <buffer> J :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#J()})<CR>
+        nnoremap <silent> <buffer> J :<C-u>ApartCall apart#lisp#J()<CR>
     endif
 
     if apart#Conf('lisp_motions', 0)
-        nnoremap <silent> <buffer> ) :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextForm(0, 0)})<CR>
-        nnoremap <silent> <buffer> ( :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextForm(0, 1)})<CR>
-        nnoremap <silent> <buffer> } :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextForm(1, 0)})<CR>
-        nnoremap <silent> <buffer> { :<C-u>call apart#DoTimes(v:count1, {-> apart#lisp#NextForm(1, 1)})<CR>
+        nnoremap <silent> <buffer> ) :<C-u>ApartCall apart#lisp#NextForm(0, 0)<CR>
+        nnoremap <silent> <buffer> ( :<C-u>ApartCall apart#lisp#NextForm(0, 1)<CR>
+        nnoremap <silent> <buffer> } :<C-u>ApartCall apart#lisp#NextForm(1, 0)<CR>
+        nnoremap <silent> <buffer> { :<C-u>ApartCall apart#lisp#NextForm(1, 1)<CR>
     endif
 endfunction

@@ -5,6 +5,9 @@
 " Legal:        No rights reserved.  Public domain.
 " ===================================================
 
+" Run the given arg multiple times based on the count.
+command! -nargs=+ ApartCall call apart#DoTimes(v:count1, {-> <args>})
+
 augroup apart_defaults
     autocmd!
 
