@@ -41,7 +41,7 @@ endfunction
 " s:GetChar(-1) -> character before the cursor.
 function! s:GetChar(rel_idx) abort
     let line = getline('.')
-    let cur = getcursorcharpos()
+    let cur = getcurpos()
     let idx = cur[2] + a:rel_idx - 1
 
     if a:rel_idx == 0
