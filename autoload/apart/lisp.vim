@@ -6,12 +6,14 @@
 " ===================================================
 
 " Smarter J mapping for Lisp dev: removes extra whitespace before closing
-" brackets.
+" brackets and after opening ones.
 function! apart#lisp#J() abort
     normal! J
+    let prevchar  = getline('.')[getcursorcharpos()[2] - 2]
     let nextchar  = getline('.')[getcursorcharpos()[2] - 1]
     let nnextchar = getline('.')[getcursorcharpos()[2]]
-    if nextchar ==# ' ' && (nnextchar ==# ']' || nnextchar ==# '}')
+    if nextchar ==# ' ' && ((nnextchar ==# ']' || nnextchar ==# '}')
+                            \ || (prevchar ==# '[' || prevchar ==# '{'))
         normal! x
     endif
 endfunction
