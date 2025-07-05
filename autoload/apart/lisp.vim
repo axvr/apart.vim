@@ -5,15 +5,13 @@
 " Legal:        No rights reserved.  Public domain.
 " ===================================================
 
-" Smarter J mapping for Lisp dev: removes extra whitespace before closing
-" brackets and after opening ones.
+" Smarter J mapping for Lisp dev: removes extra whitepace on the inside of any
+" type of bracket when using the `J` mapping (useful for Clojure).
 function! apart#lisp#J() abort
     normal! J
-    let prevchar  = getline('.')[getcursorcharpos()[2] - 2]
-    let nextchar  = getline('.')[getcursorcharpos()[2] - 1]
-    let nnextchar = getline('.')[getcursorcharpos()[2]]
-    if nextchar ==# ' ' && ((nnextchar ==# ']' || nnextchar ==# '}')
-                            \ || (prevchar ==# '[' || prevchar ==# '{'))
+    let pos = getcursorcharpos()[2]
+    let ctx = getline('.')[pos - 2 : pos]
+    if ctx =~# '\(^[\[{(] \| [\]})]$\)'
         normal! x
     endif
 endfunction

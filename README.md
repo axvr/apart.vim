@@ -3,15 +3,14 @@
 *A simple auto-bracket/quote plugin for Vim and Neovim.*
 
 This plugin is designed to work for all file types, but offers additional
-functionality for the [S-expression](https://en.wikipedia.org/wiki/S-expression)
+functionality for [S-expression](https://en.wikipedia.org/wiki/S-expression)
 based languages.
 
 
 ## Installation
 
 > [!WARNING]
-> This plugin is still a work-in-progress.  Until it reaches v1.0, expect
-> backwards incompatible changes.
+> This plugin is a work-in-progress.  Expect backwards incompatible changes.
 
 Installation of Apart can be performed by using your preferred plugin management
 solution.  If you don't have a Vim package manager I recommend using Vim
