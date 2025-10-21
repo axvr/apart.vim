@@ -12,7 +12,7 @@ let s:apart_config = {
     \   'string_auto_escape': 0,
     \   'escape_char': '\',
     \   'lisp_J': 0,
-    \   'lisp_object_motions': 0
+    \   'lisp_motions': 0
     \ }
 
 function! apart#Conf(name, default) abort

@@ -20,6 +20,12 @@ augroup apart_defaults
                 \   'lisp_motions': 1
                 \ }
 
+    autocmd FileType elixir
+                \ let b:apart_config = {
+                \   'pairs': { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'" },
+                \   'lisp_J': 1
+                \ }
+
     autocmd FileType vim
                 \ let b:apart_config = {
                 \   'pairs': { '(': ')', '[': ']', '{': '}', "'": "'" },
